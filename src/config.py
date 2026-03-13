@@ -1,0 +1,10 @@
+from src.paths import PROJECT_ROOT
+
+JAVA_BIN = "java"
+VDATUM_JAR = PROJECT_ROOT / "vdatum" / "vdatum.jar"
+
+VDATUM_REGION = "4"
+VDATUM_INPUT_HDATUM = "NAD83_2011:geo:deg"
+VDATUM_INPUT_VDATUM = "NAVD88:m:height"
+VDATUM_OUTPUT_HDATUM = "NAD83_2011:geo:deg"
+VDATUM_OUTPUT_VDATUM = "MLLW:m:height"

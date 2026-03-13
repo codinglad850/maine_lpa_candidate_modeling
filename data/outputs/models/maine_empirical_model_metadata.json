@@ -1,0 +1,28 @@
+{
+  "created_at_utc": "2026-03-13T17:41:00.836984+00:00",
+  "model_class": "GradientBoostingClassifier",
+  "feature_columns": [
+    "homes_500m",
+    "homes_1000m",
+    "log_mean_land_value",
+    "log_distance_to_shore",
+    "log_dist_lease_cluster",
+    "town_logit_prior",
+    "access_score"
+  ],
+  "target_column": "decision",
+  "n_training_rows": 1518,
+  "n_training_columns": 9,
+  "accuracy": 0.9078947368421053,
+  "artifacts": {
+    "training_matrix": "/Users/brendan/Desktop/oyster_biz/maine_map_work/maine_candidate_modeling/data/intermediate/features/maine_empirical_model_training_matrix.parquet",
+    "model_pickle": "/Users/brendan/Desktop/oyster_biz/maine_map_work/maine_candidate_modeling/data/outputs/models/maine_empirical_model.pkl"
+  },
+  "parameters": {
+    "n_estimators": 200,
+    "learning_rate": 0.05,
+    "max_depth": 3,
+    "min_samples_leaf": 20,
+    "random_state": 42
+  }
+}

@@ -1,0 +1,47 @@
+artifact: maine_empirical_model_features
+artifact_type: tabular
+artifact_role: intermediate
+canonical_path: data/intermediate/features/maine_empirical_model_features.parquet
+schema_version: 1.0.0
+
+description: >
+  Engineered feature table used for empirical LPA approval model.
+  Contains both positive (LPA) and background samples with all derived features.
+
+row_grain: one site sample
+primary_key: null
+
+constraints:
+  min_rows: 1
+
+required_fields:
+  - decision
+  - access_score
+  - homes_500m
+  - homes_1000m
+  - mean_land_value
+  - distance_to_shore
+  - dist_lease_cluster
+  - town_logit_prior
+
+recommended_fields:
+  - OBJECTID
+  - candidate_id
+  - town
+  - log_mean_land_value
+  - log_distance_to_shore
+  - log_dist_lease_cluster
+
+types:
+  decision: integer
+  access_score: float
+  homes_500m: integer
+  homes_1000m: integer
+  mean_land_value: float
+  distance_to_shore: float
+  dist_lease_cluster: float
+  town_logit_prior: float
+
+notes:
+  - This is a broad feature table prior to final model filtering.
+  - Not all columns are necessarily used in training.

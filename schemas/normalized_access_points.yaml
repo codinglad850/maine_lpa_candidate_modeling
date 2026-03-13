@@ -1,0 +1,46 @@
+artifact: normalized_access_points
+artifact_type: geospatial
+artifact_role: intermediate
+canonical_path: data/intermediate/access/normalized_access_points.geojson
+schema_version: 1.0.0
+
+description: >
+  Unified access point layer built from multiple local and remote sources.
+  Used as input to access scoring for candidate sites and LPAs.
+
+row_grain: one access point
+primary_key: access_point_id
+
+geometry:
+  required: true
+  type: Point
+  crs_allowed:
+    - EPSG:4326
+    - OGC:CRS84
+  allow_empty: false
+
+constraints:
+  min_rows: 1
+  primary_key_unique: true
+  primary_key_not_null: true
+
+required_fields:
+  - access_point_id
+
+recommended_fields:
+  - source_key
+  - source_name
+  - source_type
+  - town
+
+types:
+  access_point_id: string
+  source_key: string
+  source_name: string
+  source_type: string
+  town: string
+
+notes:
+  - Produced by build_normalized_access_points.py
+  - Combines multiple access sources into a single CRS84 point layer
+  - Used by candidate and LPA access scoring

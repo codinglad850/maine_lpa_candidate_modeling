@@ -1,0 +1,48 @@
+artifact: maine_empirical_model_training_matrix
+artifact_type: tabular
+artifact_role: intermediate
+canonical_path: data/intermediate/features/maine_empirical_model_training_matrix.parquet
+schema_version: 1.0.0
+
+description: >
+  Final model training matrix used to fit the empirical LPA approval model.
+  Contains only rows and columns used in model fitting.
+
+row_grain: one training sample
+primary_key: null
+
+constraints:
+  min_rows: 1
+  no_nulls_in:
+    - decision
+    - homes_500m
+    - homes_1000m
+    - log_mean_land_value
+    - log_distance_to_shore
+    - log_dist_lease_cluster
+    - town_logit_prior
+    - access_score
+
+required_fields:
+  - decision
+  - homes_500m
+  - homes_1000m
+  - log_mean_land_value
+  - log_distance_to_shore
+  - log_dist_lease_cluster
+  - town_logit_prior
+  - access_score
+
+types:
+  decision: integer
+  homes_500m: integer
+  homes_1000m: integer
+  log_mean_land_value: float
+  log_distance_to_shore: float
+  log_dist_lease_cluster: float
+  town_logit_prior: float
+  access_score: float
+
+notes:
+  - This table must exactly match the FEATURES list in the model script.
+  - Used directly for model training.

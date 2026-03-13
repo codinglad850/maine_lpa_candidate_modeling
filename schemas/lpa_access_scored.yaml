@@ -1,0 +1,49 @@
+artifact: lpa_access_scored
+artifact_type: geospatial
+artifact_role: intermediate
+canonical_path: data/intermediate/access/lpa_access_scored.geojson
+schema_version: 1.0.0
+
+description: >
+  LPA features enriched with access metrics computed from normalized access points.
+
+row_grain: one LPA feature
+primary_key: OBJECTID
+
+geometry:
+  required: true
+  type: Polygon
+  crs_allowed:
+    - EPSG:4326
+    - OGC:CRS84
+  allow_empty: false
+
+constraints:
+  min_rows: 1
+  primary_key_unique: true
+  primary_key_not_null: true
+  allowed_geometry_types:
+    - Point
+    - Polygon
+    - MultiPolygon
+
+required_fields:
+  - OBJECTID
+  - access_score
+
+recommended_fields:
+  - d_access_m
+  - town
+  - Species
+  - Status
+
+types:
+  OBJECTID: integer
+  access_score: float
+  d_access_m: float
+  town: string
+
+notes:
+  - Derived from Maine DMR LPA layer
+  - Only active LPAs typically included
+  - Used as positive class in empirical model training

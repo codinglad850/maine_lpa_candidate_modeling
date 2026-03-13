@@ -1,0 +1,114 @@
+artifact: candidates_depth_mllw
+artifact_type: tabular
+artifact_role: intermediate
+canonical_path: data/intermediate/candidates/candidates_depth_mllw.csv
+schema_version: 1.0.0
+
+description: >
+  Intermediate tabular candidate dataset produced by the VDatum conversion stage.
+  Each row represents one screened candidate point with retained coordinates,
+  NAVD88 depth/elevation, converted MLLW depth/elevation, and VDatum provenance fields.
+  This artifact is the immediate upstream input to final intertidal candidate generation.
+
+row_grain: one candidate point
+primary_key: candidate_id
+
+constraints:
+  min_rows: 1
+  primary_key_unique: true
+  primary_key_not_null: true
+
+fields:
+  - name: candidate_id
+    type: string
+    required: true
+    unique: true
+    nullable: false
+    description: >
+      Stable candidate identifier assigned upstream and preserved through
+      bathymetry and VDatum processing.
+
+  - name: lon
+    type: float
+    required: true
+    nullable: false
+    min: -180
+    max: 180
+    description: Longitude in decimal degrees.
+
+  - name: lat
+    type: float
+    required: true
+    nullable: false
+    min: -90
+    max: 90
+    description: Latitude in decimal degrees.
+
+  - name: depth_navd88
+    type: float
+    required: true
+    nullable: false
+    description: >
+      Candidate elevation/depth in NAVD88 used as input to VDatum.
+
+  - name: depth_mllw
+    type: float
+    required: true
+    nullable: false
+    description: >
+      Candidate elevation/depth converted to MLLW by VDatum.
+
+  - name: vdatum_status
+    type: string
+    required: true
+    nullable: false
+    allowed_values:
+      - success
+      - failed
+    description: >
+      Status of NAVD88-to-MLLW conversion.
+
+  - name: vdatum_input_datum
+    type: string
+    required: false
+    nullable: true
+    description: Input vertical datum passed to VDatum.
+
+  - name: vdatum_output_datum
+    type: string
+    required: false
+    nullable: true
+    description: Output vertical datum requested from VDatum.
+
+  - name: vdatum_region
+    type: string
+    required: false
+    nullable: true
+    description: VDatum region identifier used during conversion.
+
+  - name: vdatum_run_dir
+    type: string
+    required: false
+    nullable: true
+    description: Path to the raw VDatum run output directory for provenance.
+
+  - name: vdatum_output_csv
+    type: string
+    required: false
+    nullable: true
+    description: Path to the raw VDatum output CSV used to construct this artifact.
+
+validation_rules:
+  - rule: candidate_id must exist and be unique
+  - rule: lon and lat must exist and be within valid geographic bounds
+  - rule: depth_navd88 must be present and non-null
+  - rule: depth_mllw must be present and non-null
+  - rule: vdatum_status must be present
+  - rule: successful rows must have non-null depth_mllw
+  - rule: file must contain at least one row
+
+notes:
+  - This artifact is schema'd and validated but remains intermediate, not canonical.
+  - Downstream scripts must join using candidate_id, not row order.
+  - This artifact is produced from candidates_depth_navd88.csv via batch VDatum conversion.
+  - The canonical downstream spatial artifact is candidates_intertidal.geojson.

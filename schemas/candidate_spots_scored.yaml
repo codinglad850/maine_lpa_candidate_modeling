@@ -1,0 +1,40 @@
+artifact: candidate_spots_scored
+artifact_type: geospatial
+artifact_role: output
+canonical_path: data/outputs/models/candidate_spots_scored.geojson
+schema_version: 1.0.0
+
+description: >
+  Candidate sites scored by empirical approval model.
+
+row_grain: one candidate site
+primary_key: candidate_id
+
+geometry:
+  required: true
+  type: Point
+  crs_allowed:
+    - EPSG:4326
+    - OGC:CRS84
+
+required_fields:
+  - candidate_id
+  - approval_probability
+  - access_score
+
+types:
+  candidate_id: string
+  approval_probability: float
+  access_score: float
+
+recommended_fields:
+  - town
+  - homes_500m
+  - homes_1000m
+  - mean_land_value
+  - distance_to_shore
+  - dist_lease_cluster
+  - town_logit_prior
+
+notes:
+  - Output of empirical model scoring stage.

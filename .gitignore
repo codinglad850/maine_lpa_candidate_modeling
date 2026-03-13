@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+.venv/
+venv/
+env/
+
+# PyCharm
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data
+data/cache/
+data/intermediate/
+data/snapshots/
+data/raw/cache/
+data/raw/local/
+dem_cache_tifs/
+
+vdatum/
+
+# Large files
+*.tif
+*.tiff
+*.gpkg
+
+# Logs
+*.log
+
+# Model outputs
+*.pkl
+*.joblib
+
+# Local config
+config.local.py

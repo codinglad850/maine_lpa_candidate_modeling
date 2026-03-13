@@ -1,0 +1,44 @@
+artifact: candidate_access_scored
+artifact_type: geospatial
+artifact_role: intermediate
+canonical_path: data/intermediate/access/candidate_access_scored.geojson
+schema_version: 1.0.0
+
+description: >
+  Candidate sites enriched with access metrics computed from normalized access points.
+
+row_grain: one candidate site
+primary_key: candidate_id
+
+geometry:
+  required: true
+  type: Point
+  crs_allowed:
+    - EPSG:4326
+    - OGC:CRS84
+  allow_empty: false
+
+constraints:
+  min_rows: 1
+  primary_key_unique: true
+  primary_key_not_null: true
+
+required_fields:
+  - candidate_id
+  - access_score
+
+recommended_fields:
+  - d_access_m
+  - town
+  - access_point_id
+
+types:
+  candidate_id: string
+  access_score: float
+  d_access_m: float
+  town: string
+
+notes:
+  - Derived from candidates_intertidal.geojson
+  - Uses normalized_access_points.geojson
+  - Access score is used as a feature in the empirical model

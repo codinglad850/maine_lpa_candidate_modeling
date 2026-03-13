@@ -1,0 +1,60 @@
+artifact: candidates_screened
+artifact_type: geospatial_table
+canonical_path: data/canonical/candidates_screened.geojson
+schema_version: 1.0.0
+
+description: >
+  Canonical screened candidate-point dataset for the Maine LPA pipeline.
+  Each row represents one candidate point that lies within approved shellfish
+  areas and outside the combined hard-constraint mask. This is the first
+  authoritative candidate artifact in the pipeline and the point at which
+  stable candidate IDs are assigned.
+
+row_grain: one screened candidate point
+primary_key: candidate_id
+
+geometry:
+  required: true
+  column: geometry
+  type: Point
+  crs: EPSG:4326
+  allow_empty: false
+  allow_z: false
+
+constraints:
+  min_rows: 1
+  primary_key_unique: true
+  primary_key_not_null: true
+  allowed_geometry_types:
+    - Point
+
+fields:
+  - name: candidate_id
+    type: string
+    required: true
+    unique: true
+    nullable: false
+    description: >
+      Stable identifier assigned at candidate generation and preserved through
+      all downstream candidate-processing stages.
+
+  - name: geometry
+    type: geometry
+    required: true
+    nullable: false
+    description: >
+      Point geometry for screened candidate location in EPSG:4326.
+
+validation_rules:
+  - rule: candidate_id must exist and be unique
+  - rule: all geometries must be Point
+  - rule: CRS must be EPSG:4326
+  - rule: no null geometry values
+  - rule: no empty geometries
+  - rule: file must contain at least one row
+
+notes:
+  - Downstream joins must use candidate_id, not row order.
+  - This artifact is the first canonical candidate dataset in the pipeline.
+  - Candidate IDs should be assigned here, not later in the workflow.
+  - If lon/lat are present, they must agree with geometry coordinates.

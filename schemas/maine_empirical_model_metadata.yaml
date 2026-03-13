@@ -1,0 +1,29 @@
+artifact: town_prior
+artifact_type: tabular
+artifact_role: intermediate
+canonical_path: data/intermediate/features/town_prior.csv
+schema_version: 1.0.0
+
+description: >
+  Empirical town prior computed from candidate and LPA distributions.
+
+row_grain: one town
+primary_key: town
+
+constraints:
+  primary_key_unique: true
+  primary_key_not_null: true
+
+required_fields:
+  - town
+  - candidate_n
+  - lpa_n
+  - town_rate
+  - town_logit_prior
+
+types:
+  town: string
+  candidate_n: integer
+  lpa_n: integer
+  town_rate: float
+  town_logit_prior: float

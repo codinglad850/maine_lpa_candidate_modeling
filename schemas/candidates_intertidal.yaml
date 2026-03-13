@@ -1,0 +1,130 @@
+artifact: candidates_intertidal
+artifact_type: geospatial_table
+canonical_path: data/canonical/candidates/candidates_intertidal.geojson
+schema_version: 1.0.0
+
+description: >
+  Canonical final spatial dataset of intertidal candidate points for the Maine
+  LPA modeling pipeline. Each row represents one retained candidate point after
+  candidate screening, bathymetry enrichment, VDatum conversion to MLLW,
+  and intertidal filtering.
+
+row_grain: one final intertidal candidate point
+primary_key: candidate_id
+
+geometry:
+  required: true
+  column: geometry
+  type: Point
+  crs_allowed:
+    - EPSG:4326
+    - OGC:CRS84
+  allow_empty: false
+  allow_z: false
+
+constraints:
+  min_rows: 1
+  primary_key_unique: true
+  primary_key_not_null: true
+  allowed_geometry_types:
+    - Point
+
+fields:
+
+  - name: candidate_id
+    type: string
+    required: true
+    unique: true
+    nullable: false
+    description: >
+      Stable candidate identifier assigned upstream and preserved through all
+      candidate-processing stages.
+
+  - name: lon
+    type: float
+    required: true
+    nullable: false
+    min: -180
+    max: 180
+    description: Longitude in decimal degrees.
+
+  - name: lat
+    type: float
+    required: true
+    nullable: false
+    min: -90
+    max: 90
+    description: Latitude in decimal degrees.
+
+  - name: depth_navd88
+    type: float
+    required: false
+    nullable: true
+    description: >
+      Candidate elevation/depth in NAVD88 retained for provenance.
+
+  - name: depth_mllw
+    type: float
+    required: true
+    nullable: false
+    description: >
+      Candidate elevation/depth in MLLW used for intertidal filtering.
+
+  - name: vdatum_status
+    type: string
+    required: false
+    nullable: true
+    allowed_values:
+      - success
+      - failed
+    description: >
+      Status of NAVD88→MLLW conversion. Final candidates are expected to be success.
+
+  - name: vdatum_input_datum
+    type: string
+    required: false
+    nullable: true
+
+  - name: vdatum_output_datum
+    type: string
+    required: false
+    nullable: true
+
+  - name: vdatum_region
+    type: string
+    required: false
+    nullable: true
+
+  - name: intertidal_flag
+    type: boolean
+    required: false
+    nullable: true
+    description: >
+      Optional flag indicating the candidate passed the intertidal rule.
+
+  - name: selection_reason
+    type: string
+    required: false
+    nullable: true
+    description: >
+      Optional note describing why the candidate was retained.
+
+
+validation_rules:
+
+  - rule: candidate_id must exist and be unique
+  - rule: geometry must exist and be Point
+  - rule: CRS must be one of crs_allowed
+  - rule: no empty geometries
+  - rule: lon/lat must match geometry coordinates
+  - rule: depth_mllw must be non-null
+  - rule: file must contain at least one row
+
+
+notes:
+
+  - This artifact is the canonical final candidate dataset.
+  - Downstream scripts must join using candidate_id.
+  - Geometry must be WGS84 lon/lat.
+  - GeoJSON writers may output CRS84 instead of EPSG:4326; both are allowed.
+  - This artifact is produced from candidates_depth_mllw.csv.
