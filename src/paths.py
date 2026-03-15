@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import date
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_ROOT / "data"
@@ -111,3 +112,34 @@ EMPIRICAL_MODEL_FEATURES_SCHEMA = SCHEMAS_DIR / "maine_empirical_model_features.
 EMPIRICAL_MODEL_TRAINING_MATRIX_SCHEMA = SCHEMAS_DIR / "maine_empirical_model_training_matrix.yaml"
 TOWN_PRIOR_SCHEMA = SCHEMAS_DIR / "town_prior.yaml"
 CANDIDATE_SPOTS_SCORED_SCHEMA = SCHEMAS_DIR / "candidate_spots_scored.yaml"
+
+# snapshot remote data to enhance reproducibility
+
+SNAPSHOTS_DIR = DATA_DIR / "snapshots"
+SNAPSHOT_DATE = date.today().isoformat()
+SNAPSHOTS_DIR = DATA_DIR / "snapshots"
+CURRENT_SNAPSHOT_DIR = SNAPSHOTS_DIR / SNAPSHOT_DATE
+
+SNAPSHOT_CANDIDATE_GENERATION_DIR = CURRENT_SNAPSHOT_DIR / "candidate_generation"
+SNAPSHOT_CONSTRAINTS_DIR = CURRENT_SNAPSHOT_DIR / "constraints"
+SNAPSHOT_ACCESS_DIR = CURRENT_SNAPSHOT_DIR / "access"
+SNAPSHOT_MODEL_INPUTS_DIR = CURRENT_SNAPSHOT_DIR / "model_inputs"
+
+SNAPSHOT_MANIFEST = CURRENT_SNAPSHOT_DIR / "snapshot_manifest.json"
+
+def snapshot_root(date_str: str) -> Path:
+    return SNAPSHOTS_DIR / date_str
+
+def snapshot_group_dir(date_str: str, group: str) -> Path:
+    return snapshot_root(date_str) / group
+
+def snapshot_file_path(
+    date_str: str,
+    group: str,
+    key: str,
+    suffix: str,
+) -> Path:
+    return snapshot_group_dir(date_str, group) / f"{key}{suffix}"
+
+def snapshot_manifest_path(date_str: str) -> Path:
+    return snapshot_root(date_str) / "snapshot_manifest.json"
