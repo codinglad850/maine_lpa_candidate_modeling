@@ -35,8 +35,6 @@ from src.paths import (
 
 from src.validation import validate_geofile, validate_table_file
 
-
-
 STAGES = [
     {
         "label": "Build hard constraint mask",
