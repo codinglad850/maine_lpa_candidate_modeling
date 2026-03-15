@@ -1,0 +1,18 @@
+type: geofile
+
+crs_allowed:
+  - EPSG:4326
+  - OGC:CRS84
+
+geometry_types:
+  - Polygon
+  - MultiPolygon
+
+required_columns:
+  - geometry
+
+optional_columns:
+  - __src_name
+  - __src_url
+
+allow_extra_columns: true

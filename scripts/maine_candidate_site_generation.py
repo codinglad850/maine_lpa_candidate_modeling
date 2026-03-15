@@ -5,7 +5,7 @@ import requests
 import geopandas as gpd
 from shapely.geometry import Point
 
-from src.paths import HARD_MASK, CANDIDATES_SCREENED
+from src.paths import HARD_CONSTRAINT_MASK, CANDIDATES_SCREENED
 from src.sources.candidate_generation import NSSP_APPROVED_AREAS
 
 # =========================
@@ -14,7 +14,7 @@ from src.sources.candidate_generation import NSSP_APPROVED_AREAS
 
 NSSP_WHERE = "NSSP = 'A'"  # Approved only (no union needed)
 
-print(f'executing with hard constraints: {HARD_MASK}')
+print(f'executing with hard constraints: {HARD_CONSTRAINT_MASK}')
 
 GRID_SPACING_M = 250.0
 
@@ -133,7 +133,7 @@ def main():
     approved_m["geometry"] = approved_m.geometry.make_valid()
 
     # 2) Load hard mask (no union)
-    mask = gpd.read_file(HARD_MASK)
+    mask = gpd.read_file(HARD_CONSTRAINT_MASK)
     if mask.crs is None:
         mask = mask.set_crs(WGS84)
     mask = mask[mask.geometry.type.isin(["Polygon", "MultiPolygon"])].copy()

@@ -8,7 +8,7 @@ INTERMEDIATE_DIR = DATA_DIR / "intermediate"
 OUTPUT_DIR = DATA_DIR / "outputs"
 METADATA_DIR = DATA_DIR / "metadata"
 
-HARD_MASK = CANONICAL_DIR / "combined_hard_constraint_mask_inc_aq.gpkg"
+HARD_CONSTRAINT_MASK = CANONICAL_DIR / "combined_hard_constraint_mask_inc_aq.gpkg"
 
 # first candidate batch, screened for hard-restrictions
 CANDIDATES_SCREENED = CANONICAL_DIR / "candidates" / "candidates_screened.geojson"
@@ -92,6 +92,13 @@ CANDIDATES_SCORED = CANONICAL_DIR / "candidates" / "candidates_scored.geojson"
 CANDIDATES_SCORED_CSV = CANONICAL_DIR / "candidates" / "candidates_scored.csv"
 
 SCHEMAS_DIR = PROJECT_ROOT / "schemas"
+
+HARD_CONSTRAINT_MASK_SCHEMA = SCHEMAS_DIR / "hard_constraint_mask.yaml"
+
+CANDIDATES_SCREENED_SCHEMA = SCHEMAS_DIR / "candidates_screened.yaml"
+
+CANDIDATES_DEPTH_NAVD88_SCHEMA = SCHEMAS_DIR / "candidates_depth_navd88.yaml"
+
 
 CANDIDATES_INTERTIDAL_SCHEMA = SCHEMAS_DIR / "candidates_intertidal.yaml"
 CANDIDATES_DEPTH_MLLW_SCHEMA = SCHEMAS_DIR / "candidates_depth_mllw.yaml"

@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-03-13T17:41:00.836984+00:00",
+  "created_at_utc": "2026-03-13T23:50:03.393847+00:00",
   "model_class": "GradientBoostingClassifier",
   "feature_columns": [
     "homes_500m",
@@ -11,9 +11,9 @@
     "access_score"
   ],
   "target_column": "decision",
-  "n_training_rows": 1518,
+  "n_training_rows": 1527,
   "n_training_columns": 9,
-  "accuracy": 0.9078947368421053,
+  "accuracy": 0.8921568627450981,
   "artifacts": {
     "training_matrix": "/Users/brendan/Desktop/oyster_biz/maine_map_work/maine_candidate_modeling/data/intermediate/features/maine_empirical_model_training_matrix.parquet",
     "model_pickle": "/Users/brendan/Desktop/oyster_biz/maine_map_work/maine_candidate_modeling/data/outputs/models/maine_empirical_model.pkl"

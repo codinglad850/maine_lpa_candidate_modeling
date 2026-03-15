@@ -7,6 +7,12 @@ import sys
 import time
 
 from src.paths import (
+    HARD_CONSTRAINT_MASK,
+    HARD_CONSTRAINT_MASK_SCHEMA,
+    CANDIDATES_SCREENED,
+    CANDIDATES_SCREENED_SCHEMA,
+    CANDIDATES_DEPTH_NAVD88,
+    CANDIDATES_DEPTH_NAVD88_SCHEMA,
     CANDIDATES_DEPTH_MLLW,
     CANDIDATES_DEPTH_MLLW_SCHEMA,
     CANDIDATES_INTERTIDAL,
@@ -24,7 +30,7 @@ from src.paths import (
     EMPIRICAL_MODEL_TRAINING_MATRIX,
     EMPIRICAL_MODEL_TRAINING_MATRIX_SCHEMA,
     CANDIDATES_SCORED,
-    CANDIDATE_SPOTS_SCORED_SCHEMA,
+    CANDIDATE_SPOTS_SCORED_SCHEMA
 )
 
 from src.validation import validate_geofile, validate_table_file
@@ -32,7 +38,27 @@ from src.validation import validate_geofile, validate_table_file
 
 
 STAGES = [
-
+    {
+        "label": "Build hard constraint mask",
+        "module": "scripts.maine_hard_constraint_mask",
+        "checks": [
+            ("geo", HARD_CONSTRAINT_MASK, HARD_CONSTRAINT_MASK_SCHEMA),
+        ],
+    },
+    {
+        "label": "Generate candidate sites from approved areas minus hard mask",
+        "module": "scripts.maine_candidate_site_generation",
+        "checks": [
+            ("geo", CANDIDATES_SCREENED, CANDIDATES_SCREENED_SCHEMA),
+        ],
+    },
+    {
+        "label": "Combine candidates with bathymetry",
+        "module": "scripts.combine_candidates_with_bathymetry",
+        "checks": [
+            ("table", CANDIDATES_DEPTH_NAVD88, CANDIDATES_DEPTH_NAVD88_SCHEMA),
+        ],
+    },
     # -------------------------------------------------
     # Depth → MLLW
     # -------------------------------------------------

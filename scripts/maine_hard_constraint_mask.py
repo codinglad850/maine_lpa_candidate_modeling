@@ -4,10 +4,13 @@ from typing import Dict, List, Optional, Tuple
 from src.sources.constraints import (
     CONSTRAINT_POLYGON_SOURCES,
     NOAA_NAV_SOURCES,
-    AQ_SOURCES
+    HARD_CONSTRAINT_LOCAL_SOURCES,
+    AQ_SOURCES,
+    LPA_LAYER,
+    FULL_AQUACULTURE_LAYER
 )
 
-from src.paths import HARD_MASK
+from src.paths import HARD_CONSTRAINT_MASK
 
 import requests
 import pandas as pd
@@ -32,7 +35,7 @@ include_aquaculture = True
 
 # Output
 if include_aquaculture:
-    OUT_MASK_GPKG = HARD_MASK
+    OUT_MASK_GPKG = HARD_CONSTRAINT_MASK
 else:
     OUT_MASK_GPKG = "me_geojson/combined_hard_constraint_mask_ex_aq.gpkg"
 

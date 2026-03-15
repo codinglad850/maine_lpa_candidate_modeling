@@ -1,0 +1,11 @@
+type: table
+
+required_columns:
+  - lon
+  - lat
+  - depth_navd88
+
+optional_columns:
+  - candidate_id
+
+allow_extra_columns: true
