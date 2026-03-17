@@ -1,0 +1,8 @@
+pytest
+geopandas
+shapely
+requests
+pandas
+numpy
+scikit-learn
+joblib
