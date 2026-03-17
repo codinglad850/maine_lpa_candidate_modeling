@@ -27,6 +27,7 @@ HTTP_HEADERS = {
 ARCGIS_BATCH = 1000
 WGS84 = "EPSG:4326"
 
+MAINE_BBOX_4326 = (-71.10, 42.95, -66.85, 47.50)
 
 def ensure_parent(path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -42,14 +43,21 @@ def download_arcgis_geojson_features(src: RemoteSource) -> gpd.GeoDataFrame:
     features = []
     offset = 0
 
+    xmin, ymin, xmax, ymax = MAINE_BBOX_4326
+
     while True:
         params = {
             "where": "1=1",
             "outFields": "*",
             "returnGeometry": "true",
+            "outSR": 4326,
             "f": "geojson",
             "resultOffset": offset,
             "resultRecordCount": ARCGIS_BATCH,
+            "geometry": f"{xmin},{ymin},{xmax},{ymax}",
+            "geometryType": "esriGeometryEnvelope",
+            "inSR": 4326,
+            "spatialRel": "esriSpatialRelIntersects",
         }
 
         r = requests.get(
